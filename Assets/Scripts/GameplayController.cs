@@ -20,6 +20,6 @@ public class GameplayController : MonoBehaviour
 
     private void OnTransitionDone()
     {
-        GameplayViewRef.StartGame(100);
+        GameplayViewRef.StartGame();
     }
 }

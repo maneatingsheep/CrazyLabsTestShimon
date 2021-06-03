@@ -7,6 +7,7 @@ public class MainFlowController : MonoBehaviour
 
     private MapController _mapController;
     private GameplayController _gameplayController;
+    
     void Start()
     {
         InitAllControllers();

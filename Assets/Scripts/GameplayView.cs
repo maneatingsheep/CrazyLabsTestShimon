@@ -15,11 +15,9 @@ public class GameplayView : MonoBehaviour
 
     private Ball[,,] _grid = new Ball[20, 40, 2];
 
-    private Ball _debugBall;
-
     private Vector2 OutPos = new Vector2(0, -25);
     
-    private int _ballCount = 0;
+    private GameLevelModel _levelModel;
 
     // Start is called before the first frame update
     public void Init()
@@ -38,6 +36,8 @@ public class GameplayView : MonoBehaviour
 
     public void Reset()
     {
+        _levelModel = LevelManagerModel.Instance.GetCurrentLevel();
+        
         for (int i = 0; i < _ballsPool.Length; i++)
         {
             _ballsPool[i].Deactivate();
@@ -45,33 +45,46 @@ public class GameplayView : MonoBehaviour
         }
     }
 
-    public void StartGame(int ballCount)
+    public void StartGame()
     {
-        _ballCount = ballCount;
-        DropBalls(ballCount);
+        
+        DropBalls(_levelModel.BallCount);
     }
     
     
     private void BallClicked(Ball ball)
     {
-        _debugBall = ball;
         
         UpdateConnectionGrid();
 
-        CheckNeighbours(_debugBall);
-        for (int i = 0; i < _ballCount; i++)
+        int usedBallsCount = CheckNeighbours(ball);
+
+    
+        for (int i = 0; i < _levelModel.BallCount; i++)
         {
             if (!_ballsPool[i].IsOpen)
             {
-                _ballsPool[i].Deactivate();      
-                _ballsPool[i].transform.position = _offscreenPosition;
+                if (usedBallsCount < 3)
+                {
+                    _ballsPool[i].IsOpen = true;
+                }
+                else
+                {
+                    _ballsPool[i].Deactivate();      
+                    _ballsPool[i].transform.position = _offscreenPosition;
+                }
+                
             }
             
         }
+        
+        DropBalls(usedBallsCount);
     }
 
-    private void CheckNeighbours(Ball ball)
+    private int CheckNeighbours(Ball ball)
     {
+        int count = 1;
+        
         Vector3 pos = ball.transform.position;
         
         int gridx = Mathf.FloorToInt((pos.x + 8f) / 1.1f);
@@ -99,7 +112,7 @@ public class GameplayView : MonoBehaviour
                                 /*Vector3 o = new Vector3(0, 0, -1);
                                 Debug.DrawLine(ball.transform.position + o, neighbour.transform.position + o);*/
                                 
-                                CheckNeighbours(neighbour);
+                                count += CheckNeighbours(neighbour);
                             }
                         }
                     }
@@ -109,13 +122,14 @@ public class GameplayView : MonoBehaviour
             }            
         }
 
+        return count;
     }
 
     // Update is called once per frame
     public void DropBalls(int ballCount)
     {
         int i = 0;
-        while (i < _ballCount && ballCount > 0)
+        while (i < _levelModel.BallCount && ballCount > 0)
         {
             if (!_ballsPool[i].IsActivated)
             {
@@ -139,7 +153,7 @@ public class GameplayView : MonoBehaviour
             }            
         }
 
-        for (int i = 0; i < _ballCount; i++)
+        for (int i = 0; i < _levelModel.BallCount; i++)
         {
             if (_ballsPool[i].IsActivated)
             {
@@ -153,17 +167,6 @@ public class GameplayView : MonoBehaviour
         
     }
     
-    
-    private void Update()
-    {
-        if (_debugBall != null)
-        {
-            /*UpdateConnectionGrid();
-
-            CheckNeighbours(_debugBall);*/
-        }
-    }
-
     public void TransitionIn(Action doneCallback)
     {
         LeanTween.move(gameObject, Vector2.zero, 0.5f);
