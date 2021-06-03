@@ -10,7 +10,13 @@ public class MainFlowController : MonoBehaviour
     
     void Start()
     {
+        InitAllModels();
         InitAllControllers();
+    }
+
+    private void InitAllModels()
+    {
+        LevelManagerModel.Instance.Init();
     }
 
     private void InitAllControllers()
@@ -22,12 +28,20 @@ public class MainFlowController : MonoBehaviour
         _gameplayController.Init();
 
         _mapController.OnGameStartClicked += StartGame;
+        _gameplayController.OnGameOver += EndGame;
     }
 
     private void StartGame()
     {
         _mapController.StartGame();
         _gameplayController.StartGame();
+    }
+    
+    private void EndGame()
+    {
+        _mapController.EndGame();
+        _gameplayController.EndGame();
+        LevelManagerModel.Instance.AdvanceLevel();
     }
     
 }

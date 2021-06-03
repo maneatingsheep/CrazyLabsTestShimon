@@ -26,4 +26,10 @@ public class MapController : MonoBehaviour
     {
         OnGameStartClicked();
     }
+
+    public void EndGame()
+    {
+        MapViewRef.SetInteractive(true);
+        MapViewRef.TransitionIn(true);
+    }
 }

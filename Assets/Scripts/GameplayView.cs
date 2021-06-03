@@ -11,6 +11,10 @@ public class GameplayView : MonoBehaviour
 
     private Ball[] _ballsPool;
 
+    public Color[] BallColors;
+
+    public Action<int, int> OnBallsEliminated;
+    
     private Vector2 _offscreenPosition = new Vector2(20, 0);
 
     private Ball[,,] _grid = new Ball[20, 40, 2];
@@ -18,6 +22,7 @@ public class GameplayView : MonoBehaviour
     private Vector2 OutPos = new Vector2(0, -25);
     
     private GameLevelModel _levelModel;
+    private const int MIN_CHAIN_LEN = 3;
 
     // Start is called before the first frame update
     public void Init()
@@ -47,8 +52,7 @@ public class GameplayView : MonoBehaviour
 
     public void StartGame()
     {
-        
-        DropBalls(_levelModel.BallCount);
+        DropBalls();
     }
     
     
@@ -64,7 +68,7 @@ public class GameplayView : MonoBehaviour
         {
             if (!_ballsPool[i].IsOpen)
             {
-                if (usedBallsCount < 3)
+                if (usedBallsCount < MIN_CHAIN_LEN)
                 {
                     _ballsPool[i].IsOpen = true;
                 }
@@ -73,12 +77,15 @@ public class GameplayView : MonoBehaviour
                     _ballsPool[i].Deactivate();      
                     _ballsPool[i].transform.position = _offscreenPosition;
                 }
-                
             }
             
         }
+
+        if (usedBallsCount >= MIN_CHAIN_LEN)
+        {
+            OnBallsEliminated(ball.TypeID, usedBallsCount);
+        }
         
-        DropBalls(usedBallsCount);
     }
 
     private int CheckNeighbours(Ball ball)
@@ -104,7 +111,7 @@ public class GameplayView : MonoBehaviour
                     for (int k = 0; k < 2; k++)
                     {
                         Ball neighbour = _grid[gridx + i, gridy + j, k];
-                        if (neighbour != null && neighbour.Type == ball.Type && neighbour.IsOpen)
+                        if (neighbour != null && neighbour.TypeID == ball.TypeID && neighbour.IsOpen)
                         {
                             float dist = (neighbour.transform.position - ball.transform.position).magnitude;
                             if (dist < 1.1f)
@@ -126,17 +133,17 @@ public class GameplayView : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void DropBalls(int ballCount)
+    public void DropBalls()
     {
         int i = 0;
-        while (i < _levelModel.BallCount && ballCount > 0)
+        while (i < _levelModel.BallCount)
         {
             if (!_ballsPool[i].IsActivated)
             {
                 _ballsPool[i].transform.position = new Vector2(Random.Range(-2f, 2f), Random.Range(3f, 5f));
-                _ballsPool[i].SetType(Random.Range(0, 3));
+                int typeIndex = Random.Range(0, _levelModel.AllowedTypes.Length);
+                _ballsPool[i].SetType(typeIndex, BallColors[_levelModel.AllowedTypes[typeIndex]]);
                 _ballsPool[i].Activate();
-                ballCount--;
             }
             i++;
         }

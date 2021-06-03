@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class LevelEditModel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int BallCount;
+    public int[] AllowedTypes;
+    public int[] TargetCounts;
 
-    // Update is called once per frame
-    void Update()
+
+    public GameLevelModel GenerateLevel()
     {
-        
+        GameLevelModel glm = new GameLevelModel();
+        glm.BallCount = BallCount;
+        glm.AllowedTypes = AllowedTypes;
+        glm.TargetCounts = TargetCounts;
+
+        return glm;
     }
+        
 }
