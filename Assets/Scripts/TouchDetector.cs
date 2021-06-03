@@ -17,6 +17,7 @@ public class TouchDetector : MonoBehaviour
 
     private Vector2 _initialPanPosition;
     private float _inititlaScaleDist;
+    public bool IsInteractive = false;
 
 
     public void Init()
@@ -26,6 +27,13 @@ public class TouchDetector : MonoBehaviour
     }
     void Update()
     {
+        if (!IsInteractive)
+        {
+            _isPaning = false;
+            _isScaling = false;
+            return;
+        }
+        
         Touch[] touches = Input.touches;
         
         if (touches.Length > 0 || Input.GetMouseButton(0))

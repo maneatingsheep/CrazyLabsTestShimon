@@ -18,17 +18,18 @@ public class Ball : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
-        Deactivate();
     }
     
     public void Deactivate()
     {
         _rb.isKinematic = true;
         IsActivated = false;
+        gameObject.SetActive(false);
     }
 
     public void Activate()
     {
+        gameObject.SetActive(true);
         _rb.isKinematic = false;
         IsActivated = true;
     }

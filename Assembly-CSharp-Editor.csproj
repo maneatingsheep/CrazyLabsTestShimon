@@ -50,7 +50,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
+     <Compile Include="Assets\LeanTween\Editor\LeanTweenDocumentationEditor.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>/Users/shimon/Test/CrazyLabsTestShimon/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
