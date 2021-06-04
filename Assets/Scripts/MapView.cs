@@ -5,23 +5,27 @@ using UnityEngine;
 public class MapView : MonoBehaviour
 {
 
-    public Transform ParalaxFront;
-    public Transform ParalaxBack;
-
     public RectTransform StartButt;
+
+    public ParticleSystem[] Particles;
     
-    private Vector2 _paralaxOffset = Vector2.zero;
-    private float _scale = 1;
+    private ParalaxView _paralaxView;
+    
+    private const float WorldUnitHeigth = 24f;
+    
+    private const float ScrollRange = 6f;
+    
     private TouchDetector _td;
 
-    private const float WorldUnitHeigth = 24f;
-
-    private const float ScrollRange = 6f;
+    private Vector2 _paralaxOffset = Vector2.zero;
+    private float _scale = 1;
     
     public void Init()
     {
         
         _td = GetComponent<TouchDetector>();
+        _paralaxView = GetComponent<ParalaxView>();
+        
         _td.Init();
         _td.OnGestureDetected = DoGesture;
         
@@ -57,22 +61,11 @@ public class MapView : MonoBehaviour
 
         _paralaxOffset = endPoint + diff;
         
-        SetParalax();
+        _paralaxView.SetParalax(_paralaxOffset, _scale);
     }
 
 
-    private void SetParalax()
-    {
-        
-        ParalaxFront.position = _paralaxOffset;
-        ParalaxBack.position = _paralaxOffset * 0.2f;
-
-        ParalaxFront.localScale = new Vector3(_scale, _scale, 1) ;
-
-        float backScale = (_scale - 1) * 0.2f + 1;
-        ParalaxBack.localScale = new Vector3(backScale, backScale, 1) ;
-        
-    }
+    
 
 
     public void TransitionOut()
@@ -85,10 +78,13 @@ public class MapView : MonoBehaviour
         LeanTween.value(gameObject, _scale, 1, 0.5f).setOnUpdate((float v) =>
         {
             _scale = v;
-            SetParalax();
+            _paralaxView.SetParalax(_paralaxOffset, _scale);
         });
-        
+
+        SetPArticlesActivation(false);
     }
+
+    
 
     public void TransitionIn(bool showAnimation)
     {
@@ -102,7 +98,7 @@ public class MapView : MonoBehaviour
             LeanTween.value(gameObject, _paralaxOffset, Vector2.zero, 0.5f).setOnUpdate((Vector2 v) =>
             {
                 _paralaxOffset = v;
-                SetParalax();
+                _paralaxView.SetParalax(_paralaxOffset, _scale);
             });
             
         }
@@ -112,13 +108,31 @@ public class MapView : MonoBehaviour
             
             _paralaxOffset = Vector2.zero;
             _scale = 1;
-            SetParalax();
+            _paralaxView.SetParalax(_paralaxOffset, _scale);
             
             
         }
         
+        SetPArticlesActivation(true);
     }
 
+    private void SetPArticlesActivation(bool isActive)
+    {
+        for (int i = 0; i < Particles.Length; i++)
+        {
+            if (isActive)
+            {
+                Particles[i].Play();
+            }
+            else
+            {
+                Particles[i].Pause();
+            }
+                
+        }
+        
+    }
+    
     public void SetInteractive(bool isInteractive)
     {
         _td.IsInteractive = isInteractive;

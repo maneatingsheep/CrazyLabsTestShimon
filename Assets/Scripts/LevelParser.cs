@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class LevelParser : MonoBehaviour
 {
-
-    public Text dbg;
     
     private string _path = "Assets/Resources/levels.txt";
     

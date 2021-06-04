@@ -1095,7 +1095,7 @@ ScriptsOnlyBuild:
     className: LevelManagerGeneratorEditor
   - hash:
       serializedVersion: 2
-      Hash: a704a2ecfe754aa33ae9ff48cad3b413
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LevelParser
