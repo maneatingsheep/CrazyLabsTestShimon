@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
+
 [CustomEditor(typeof(LevelManagerModel))]
 public class LevelManagerGeneratorEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
+        
         LevelManagerModel lmm = (LevelManagerModel)target;
 
         GameLevelModel[] levels = new GameLevelModel[lmm.transform.childCount];
@@ -29,4 +34,4 @@ public class LevelManagerGeneratorEditor : Editor
 }
 
 
-
+#endif

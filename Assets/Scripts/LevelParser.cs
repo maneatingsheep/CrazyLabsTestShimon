@@ -1,16 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelParser : MonoBehaviour
 {
 
+    public Text dbg;
+    
     private string _path = "Assets/Resources/levels.txt";
+    
+    #if UNITY_EDITOR
     public void WriteLevels(GameLevelModel[] levels)
     {
-
+        
         LevelManagerModel.LevelJsonWrapper wrapper = new LevelManagerModel.LevelJsonWrapper();
         wrapper.levels = levels;
         
@@ -25,14 +31,15 @@ public class LevelParser : MonoBehaviour
         
         
     }
+    
+    #endif
 
     public GameLevelModel[] ReadLevels()
     {
-        StreamReader sr = new StreamReader(_path); 
-        string json = sr.ReadToEnd();
-        sr.Close();
-
-        LevelManagerModel.LevelJsonWrapper levelsWrapper = JsonUtility.FromJson<LevelManagerModel.LevelJsonWrapper>(json);
+        
+        TextAsset levelsTxt = (TextAsset)Resources.Load("levels", typeof(TextAsset));
+        
+        LevelManagerModel.LevelJsonWrapper levelsWrapper = JsonUtility.FromJson<LevelManagerModel.LevelJsonWrapper>(levelsTxt.text);
 
         return levelsWrapper.levels;
     }

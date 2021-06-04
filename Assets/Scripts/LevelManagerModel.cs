@@ -9,6 +9,8 @@ public class LevelManagerModel : MonoBehaviour
 
     private GameLevelModel[] _levels;
     private int _currentLevel = 0;
+
+    
     void Awake()
     {
         Instance = this;
@@ -17,7 +19,6 @@ public class LevelManagerModel : MonoBehaviour
     public void Init()
     {
         _levels = GetComponent<LevelParser>().ReadLevels();
-        
     }
     
     public GameLevelModel GetCurrentLevel()
