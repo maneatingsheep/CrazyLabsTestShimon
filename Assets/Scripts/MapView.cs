@@ -90,7 +90,7 @@ public class MapView : MonoBehaviour
     {
         if (showAnimation)
         {
-            LeanTween.move(StartButt.gameObject, Vector2.zero, 0.5f);
+            LeanTween.value(-300, 0, 0.5f).setOnUpdate((float v)=>StartButt.anchoredPosition = new Vector2(0, v));
             
             _paralaxOffset = new Vector2(0, 25f);;
             _scale = 1;
