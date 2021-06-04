@@ -11,6 +11,7 @@ ScriptsOnlyBuild:
     - MainFlowController
     - MapController
     - MapView
+    - ParalaxView
     - RequestView
     - TouchDetector
     Unity.RenderPipelines.Core.Runtime.dll:
@@ -210,6 +211,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 45982}
     - Class: 114
       Script: {instanceID: 45992}
+    - Class: 114
+      Script: {instanceID: 60626}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -217,6 +220,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -927,7 +934,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: a7a6c1b397f9d4cdc0d4e25a6dff8abd
+      Hash: 8a3efd3f8432e792e344fa0a045ae4d5
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MapView
@@ -1111,6 +1118,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RequestView
+  - hash:
+      serializedVersion: 2
+      Hash: 1e700b8efb684cd2385596a668b3f63d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ParalaxView
   platform: 13
   scenePathNames:
   - Assets/Scenes/Main.unity

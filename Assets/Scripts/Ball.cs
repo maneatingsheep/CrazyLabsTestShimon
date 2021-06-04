@@ -38,7 +38,8 @@ public class Ball : MonoBehaviour
     public void SetType(int typeId, Color col)
     {
         TypeID = typeId;
-        _sr.color = col;
+        //_sr.color = col;
+        _sr.material.color = col;
     }
 
     public void OnMouseDown()

@@ -104,17 +104,32 @@ void SphericalUV_float(float3 Pos, out float2 ShereUV){
     ShereUV  = SphericalUV(normalize(Pos));
 }
 
-void GetPattern_float(Texture2D tex, float2 uv, float2 pos, SamplerState ss, out float3 o)
+void GetPattern_float(Texture2D tex, Texture2D hl, float2 uv, float2 pos, float3 col, float noise, SamplerState ss, out float3 o)
 {
     o = 0;
-    uv -= float2(0.5f, 0.5f);
-    if (length(uv) > 0.5f)
+    float2 cuv = uv - float2(0.5f, 0.5f);
+    if (length(cuv) > 0.5f)
     {
         discard;
     }else
     {
-        uv = pos + uv * length(uv);
-        o = SAMPLE_TEXTURE2D(tex, ss, uv).xyz;        
+
+        
+        float2 bguv = pos;
+        bguv += cuv * length(cuv) * 0.3f;
+
+        float2 noiseUV = float2(noise, 1 - noise) * 0.05; 
+        
+        float3 backC = SAMPLE_TEXTURE2D(tex, ss, bguv + noiseUV).xyz;
+
+        float3 tintC = lerp(col, backC, 0.3f + 0.25 - length(cuv) / 2.) * 0.9 + col * 0.1;
+        //float3 tintC = col *  (backC * 0.5) * 0.9 + col * 0.1;
+        
+        float4 hlc = SAMPLE_TEXTURE2D(hl, ss, uv); 
+        o = lerp(tintC, hlc.xyz, hlc.w);
+          
+
+        
     }
     
 }
