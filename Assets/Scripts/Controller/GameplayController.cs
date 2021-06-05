@@ -21,12 +21,12 @@ namespace Controller
         {
             UIViewRef.Init();
             GameplayViewRef.Init();
-            GameplayViewRef.OnBallsEliminated += BallsElimiated;
+            GameplayViewRef.OnBallsEliminated += BallsEliminaßted;
 
             GameplayViewRef.TransitionOut(false);
         }
 
-        private void BallsElimiated(int typeID, int count)
+        private void BallsEliminaßted(int typeID, int count)
         {
             if (typeID >= _currentCounts.Length)
             {
@@ -40,13 +40,13 @@ namespace Controller
             _currentCounts[typeID] += count;
             UIViewRef.UpdateView(typeID, Mathf.Max(0, _currentLevel.TargetCounts[typeID] - _currentCounts[typeID]));
 
-            bool IsGameOver = true;
+            bool isGameOver = true;
             for (int i = 0; i < _currentCounts.Length; i++)
             {
-                IsGameOver &= _currentLevel.TargetCounts[i] - _currentCounts[i] <= 0;
+                isGameOver &= _currentLevel.TargetCounts[i] - _currentCounts[i] <= 0;
             }
 
-            if (IsGameOver)
+            if (isGameOver)
             {
                 OnGameOver();
             }

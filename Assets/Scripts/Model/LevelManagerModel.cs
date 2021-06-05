@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Model
 {
-
     public class LevelManagerModel : MonoBehaviour
     {
         public static LevelManagerModel Instance;

@@ -13,12 +13,12 @@ namespace View
 
         public Ball BallPF;
 
-        private Ball[] _ballsPool;
-
         public Color[] BallColors;
 
         public Action<int, int> OnBallsEliminated;
 
+        private Ball[] _ballsPool;
+        
         private Vector2 _offscreenPosition = new Vector2(20, 0);
 
         private Ball[,,] _grid = new Ball[20, 40, 2];

@@ -6,8 +6,6 @@ using View;
 
 namespace Controller
 {
-
-
     public class MapController : MonoBehaviour
     {
         public MapView MapViewRef;

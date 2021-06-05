@@ -41,7 +41,6 @@ namespace View
         public void SetType(int typeId, Color col)
         {
             TypeID = typeId;
-            //_sr.color = col;
             _sr.material.color = col;
         }
 

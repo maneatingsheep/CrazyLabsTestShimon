@@ -10,7 +10,6 @@ namespace Model
 {
     public class LevelParser : MonoBehaviour
     {
-
         private string _path = "Assets/Resources/levels.txt";
 
 #if UNITY_EDITOR
