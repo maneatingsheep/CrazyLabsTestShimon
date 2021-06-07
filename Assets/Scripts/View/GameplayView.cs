@@ -17,7 +17,11 @@ namespace View
 
         public Action<int, int> OnBallsEliminated;
 
-        private Ball[] _ballsPool;
+        public float StartDelay;
+
+        
+        
+        private Ball[] _ballsPool;  
         
         private Vector2 _offscreenPosition = new Vector2(20, 0);
 
@@ -181,9 +185,12 @@ namespace View
 
         public void TransitionIn(Action doneCallback)
         {
-            LeanTween.move(gameObject, Vector2.zero, 0.5f);
-            LeanTween.delayedCall(1f, doneCallback);
+            float tt = ViewSettingsUtils.Instance.TransitionTime;
+
+            LeanTween.move(gameObject, Vector2.zero, tt);
+            LeanTween.delayedCall(tt + StartDelay, doneCallback);
         }
+
 
         public void TransitionOut(bool showAnimation)
         {

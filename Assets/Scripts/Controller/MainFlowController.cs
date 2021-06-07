@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Model;
 using UnityEngine;
+using View;
 
 namespace Controller
 {
@@ -10,11 +11,13 @@ namespace Controller
 
         private MapController _mapController;
         private GameplayController _gameplayController;
-
+        
+        
         void Start()
         {
             InitAllModels();
             InitAllControllers();
+            
         }
 
         private void InitAllModels()

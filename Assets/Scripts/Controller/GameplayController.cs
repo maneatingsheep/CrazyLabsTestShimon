@@ -10,7 +10,8 @@ namespace Controller
     public class GameplayController : MonoBehaviour
     {
         public GameplayView GameplayViewRef;
-        public GameplayUIView UIViewRef;
+        public UIView UIViewRef;
+        
         private GameLevelModel _currentLevel;
 
         public Action OnGameOver;
@@ -19,11 +20,12 @@ namespace Controller
 
         public void Init()
         {
-            UIViewRef.Init();
             GameplayViewRef.Init();
+            UIViewRef.Init();
             GameplayViewRef.OnBallsEliminated += BallsEliminaßted;
 
             GameplayViewRef.TransitionOut(false);
+            UIViewRef.DoTransition(false, false);
         }
 
         private void BallsEliminaßted(int typeID, int count)
@@ -34,11 +36,8 @@ namespace Controller
                 return;
             }
 
-            ;
-
-
             _currentCounts[typeID] += count;
-            UIViewRef.UpdateView(typeID, Mathf.Max(0, _currentLevel.TargetCounts[typeID] - _currentCounts[typeID]));
+            UIViewRef.UpdateCount(typeID, Mathf.Max(0, _currentLevel.TargetCounts[typeID] - _currentCounts[typeID]));
 
             bool isGameOver = true;
             for (int i = 0; i < _currentCounts.Length; i++)
@@ -63,7 +62,8 @@ namespace Controller
 
             _currentCounts = new int[_currentLevel.TargetCounts.Length];
 
-            UIViewRef.Reset();
+            UIViewRef.SetLevel();
+            UIViewRef.DoTransition(true, true);
             GameplayViewRef.Reset();
             GameplayViewRef.TransitionIn(OnTransitionDone);
         }
@@ -76,6 +76,8 @@ namespace Controller
         public void EndGame()
         {
             GameplayViewRef.TransitionOut(true);
+            UIViewRef.DoTransition(false, true);
+
         }
     }
 }

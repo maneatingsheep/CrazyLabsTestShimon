@@ -6,17 +6,17 @@ namespace View
 {
     public class MapView : MonoBehaviour
     {
-
-        public RectTransform StartButt;
-
+        
         public ParticleSystem[] Particles;
 
         private ParalaxView _paralaxView;
 
-        private const float WorldUnitHeigth = 24f;
+        public float ScrollRange;
+        public float ScaleMin;
+        public float ScaleMax;
 
-        private const float ScrollRange = 6f;
-
+        public float OffsetOut;
+        
         private TouchDetector _td;
 
         private Vector2 _paralaxOffset = Vector2.zero;
@@ -34,51 +34,45 @@ namespace View
 
         }
 
-        private void DoGesture(Vector2 endPointNorm, Vector2 posDeltaNorm, float normScaleDelta)
+        private void DoGesture(Vector2 endPointNormalized, Vector2 posDeltaNormalized, float scaleFactor)
         {
-
-
-            _scale *= normScaleDelta;
-            if (_scale < 0.5f)
+            _scale *= scaleFactor;
+            if (_scale < ScaleMin)
             {
-                _scale = 0.5f;
+                _scale = ScaleMin;
             }
-            else if (_scale > 2f)
+            else if (_scale > ScaleMax)
             {
-                _scale = 2f;
+                _scale = ScaleMax;
             }
 
-            _paralaxOffset += posDeltaNorm * WorldUnitHeigth;
+            _paralaxOffset += posDeltaNormalized * ViewSettingsUtils.Instance.StageHeight;
 
             if (_paralaxOffset.magnitude > ScrollRange * _scale)
             {
                 _paralaxOffset.Normalize();
                 _paralaxOffset *= ScrollRange * _scale;
             }
-
-
-            Vector2 endPoint = endPointNorm * WorldUnitHeigth;
+            
+            Vector2 endPoint = endPointNormalized * ViewSettingsUtils.Instance.StageHeight;
             Vector2 diff = _paralaxOffset - endPoint;
-            diff *= normScaleDelta;
+            diff *= scaleFactor;
 
             _paralaxOffset = endPoint + diff;
 
             _paralaxView.SetParalax(_paralaxOffset, _scale);
         }
 
-
-
-
-
         public void TransitionOut()
         {
-            Vector2 outOffset = new Vector2(0, 25f);
+            Vector2 outOffset = new Vector2(0, OffsetOut);
 
-            LeanTween.value(0, -300, 0.5f).setOnUpdate((float v) => StartButt.anchoredPosition = new Vector2(0, v));
+            float tt = ViewSettingsUtils.Instance.TransitionTime;
+            
 
-            LeanTween.value(gameObject, _paralaxOffset, outOffset, 0.5f)
+            LeanTween.value(gameObject, _paralaxOffset, outOffset, tt)
                 .setOnUpdate((Vector2 v) => { _paralaxOffset = v; });
-            LeanTween.value(gameObject, _scale, 1, 0.5f).setOnUpdate((float v) =>
+            LeanTween.value(gameObject, _scale, 1, tt).setOnUpdate((float v) =>
             {
                 _scale = v;
                 _paralaxView.SetParalax(_paralaxOffset, _scale);
@@ -93,13 +87,14 @@ namespace View
         {
             if (showAnimation)
             {
-                LeanTween.value(-300, 0, 0.5f).setOnUpdate((float v) => StartButt.anchoredPosition = new Vector2(0, v));
+                float tt = ViewSettingsUtils.Instance.TransitionTime;
 
-                _paralaxOffset = new Vector2(0, 25f);
+
+                _paralaxOffset = new Vector2(0, OffsetOut);
                 ;
                 _scale = 1;
 
-                LeanTween.value(gameObject, _paralaxOffset, Vector2.zero, 0.5f).setOnUpdate((Vector2 v) =>
+                LeanTween.value(gameObject, _paralaxOffset, Vector2.zero, tt).setOnUpdate((Vector2 v) =>
                 {
                     _paralaxOffset = v;
                     _paralaxView.SetParalax(_paralaxOffset, _scale);
@@ -108,8 +103,6 @@ namespace View
             }
             else
             {
-                StartButt.anchoredPosition = Vector2.zero;
-
                 _paralaxOffset = Vector2.zero;
                 _scale = 1;
                 _paralaxView.SetParalax(_paralaxOffset, _scale);
