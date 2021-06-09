@@ -21,7 +21,7 @@ namespace View
 
         private Vector2 _initialPanPosition;
         private float _inititlaScaleDist;
-        public bool IsInteractive = false;
+        internal bool IsInteractive = false;
 
 
         public void Init()

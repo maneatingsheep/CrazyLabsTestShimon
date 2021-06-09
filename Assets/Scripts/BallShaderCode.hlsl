@@ -115,7 +115,7 @@ void GetPattern_float(Texture2D tex, Texture2D hl, float2 uv, float2 pos, float3
     {
 
         
-        float2 bguv = pos;
+        float2 bguv = float2((pos.x - 0.5f) * 0.8f + 0.5f, pos.y * 1.1f);
         bguv += cuv * length(cuv) * 0.3f;
 
         float2 noiseUV = float2(noise, 1 - noise) * 0.05; 

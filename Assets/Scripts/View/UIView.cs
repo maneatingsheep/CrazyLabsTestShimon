@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Model;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace View
 
         public RectTransform RequestsListView;
         public RectTransform StartButt;
-        
+        public RectTransform GameOverMessage;
         
         private LevelManagerModel _lmm;
         private GameLevelModel _currentlevel;
@@ -48,6 +49,8 @@ namespace View
             {
                 _requests[i].gameObject.SetActive(false);
             }
+            
+            GameOverMessage.gameObject.SetActive(false);
         }
 
         public void UpdateCount(int typeID, int currentCount)
@@ -78,6 +81,21 @@ namespace View
             LeanTween.value(reqFrom, reqTo, tt).setOnUpdate((float v) => RequestsListView.anchoredPosition = new Vector2(0, v));
 
 
+        }
+
+        public void ShowGameOverMessage(Action animDoneCallback)
+        {
+            GameOverMessage.gameObject.SetActive(true);
+            GameOverMessage.localScale = Vector3.one * 0.4f;
+            LeanTween.scale(GameOverMessage.gameObject, Vector3.one, 0.3f).setEase(LeanTweenType.easeOutBounce);
+
+            LeanTween.delayedCall(2f, ()=>
+            {
+                GameOverMessage.gameObject.SetActive(false);
+                animDoneCallback();
+
+            });
+            
         }
     }
 }

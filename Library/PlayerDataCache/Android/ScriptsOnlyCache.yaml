@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - ArrowView
     - Controller.GameplayController
     - Controller.MainFlowController
     - Controller.MapController
@@ -8,12 +9,13 @@ ScriptsOnlyBuild:
     - Model.LevelManagerModel
     - Model.LevelParser
     - View.Ball
-    - View.GameplayUIView
     - View.GameplayView
     - View.MapView
     - View.ParalaxView
     - View.RequestView
     - View.TouchDetector
+    - View.UIView
+    - ViewSettingsUtils
     Unity.RenderPipelines.Core.Runtime.dll:
     - UnityEngine.Rendering.UI.DebugUIHandlerBitField
     - UnityEngine.Rendering.UI.DebugUIHandlerButton
@@ -51,6 +53,7 @@ ScriptsOnlyBuild:
     - Packages.Rider.Editor.RiderScriptEditorData
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.ShaderGraph.Editor.dll:
+    - UnityEditor.Graphing.GraphObject
     - UnityEditor.ShaderGraph.Drawing.MaterialGraphEditWindow
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
@@ -101,6 +104,8 @@ ScriptsOnlyBuild:
     - Class: 61
       Script: {instanceID: 0}
     - Class: 62
+      Script: {instanceID: 0}
+    - Class: 68
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
@@ -212,6 +217,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 15780}
     - Class: 114
       Script: {instanceID: 15788}
+    - Class: 114
+      Script: {instanceID: 22878}
+    - Class: 114
+      Script: {instanceID: 44572}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -285,7 +294,7 @@ ScriptsOnlyBuild:
     className: TMP_SelectionCaret
   - hash:
       serializedVersion: 2
-      Hash: f3be58313a1083e04e9d8fcb72c266ad
+      Hash: 0afef9e986b435bed4e61e72727aa65e
     assemblyName: Assembly-CSharp.dll
     namespaceName: Controller
     className: GameplayController
@@ -513,7 +522,7 @@ ScriptsOnlyBuild:
     className: UniversalAdditionalCameraData
   - hash:
       serializedVersion: 2
-      Hash: 0d9378e97dd7a63c3ce7f0233c02d688
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: View
     className: TouchDetector
@@ -777,10 +786,10 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: cd18934a3630a1f8cb4a2053987a2fe0
+      Hash: bb7a72494a6ab58b71fedde42bc2cd68
     assemblyName: Assembly-CSharp.dll
     namespaceName: View
-    className: GameplayUIView
+    className: UIView
   - hash:
       serializedVersion: 2
       Hash: a64b8ff703a69f3352c424e9d0bc1c49
@@ -885,7 +894,7 @@ ScriptsOnlyBuild:
     className: CinemachineUniversalPixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 23da515a691199d4864a1ef95c377a38
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: View
     className: Ball
@@ -921,7 +930,7 @@ ScriptsOnlyBuild:
     className: TMP_StyleSheet
   - hash:
       serializedVersion: 2
-      Hash: 1e1f0ea6a3a020f3cd067f9c8778ddbe
+      Hash: 8b3e6081ae458e5a2c776554c1f094ad
     assemblyName: Assembly-CSharp.dll
     namespaceName: View
     className: GameplayView
@@ -987,7 +996,7 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
-      Hash: 8a3efd3f8432e792e344fa0a045ae4d5
+      Hash: cc578afdbe5478c9115466710197bd29
     assemblyName: Assembly-CSharp.dll
     namespaceName: View
     className: MapView
@@ -1123,6 +1132,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 7f0c915b594e37179f3da41e2541f5b7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ViewSettingsUtils
+  - hash:
+      serializedVersion: 2
+      Hash: 2ce900db3946a1b04b14b2c782adea4b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ArrowView
   platform: 13
   scenePathNames:
   - Assets/Scenes/Main.unity

@@ -47,7 +47,7 @@ namespace Controller
 
             if (isGameOver)
             {
-                OnGameOver();
+                UIViewRef.ShowGameOverMessage(NotifyGameOver);
             }
             else
             {
@@ -75,9 +75,15 @@ namespace Controller
 
         public void EndGame()
         {
+            
             GameplayViewRef.TransitionOut(true);
             UIViewRef.DoTransition(false, true);
+        }
 
+        private void NotifyGameOver()
+        {
+            
+            OnGameOver();
         }
     }
 }
